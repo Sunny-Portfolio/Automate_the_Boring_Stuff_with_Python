@@ -4,8 +4,14 @@
 
 import pyperclip
 
-text = pyperclip.paste()
+copied_text = pyperclip.paste()
 
-# TODO: Separate lines and add stars.
+# Separate lines and add stars.
+lines = copied_text.split('\n')
+for i in range(len(lines)):
+    lines[i] = '* ' + lines[i]
 
-pyperclip.copy(text)
+copied_text = '\n'.join(lines)
+
+# Copies the modified text to clipboard to paste to Wikipedia
+pyperclip.copy(copied_text)
