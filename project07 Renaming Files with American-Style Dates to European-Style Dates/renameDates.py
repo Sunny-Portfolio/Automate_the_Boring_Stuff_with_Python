@@ -14,10 +14,13 @@ datePattern = re.compile(r"""^(.*?) # all text before the date
 
 # Loop over the files in the working directory.
 for amerFilename in os.listdir('.'):
+    print('American filename : ', amerFilename)
     matchObj = datePattern.search(amerFilename)
+
     # Skip files without a date.
     if matchObj is None:
         continue
+
     # Get the different parts of the filename.
     beforePart = matchObj.group(1)
     monthPart = matchObj.group(2)
@@ -25,17 +28,15 @@ for amerFilename in os.listdir('.'):
     yearPart = matchObj.group(6)
     afterPart = matchObj.group(8)
 
-# TODO: Form the European-style filename.
-# TODO: Get the full, absolute file paths.
-# TODO: Rename the files.
+    # Form the European-style filename.
+    euroFilename = beforePart + dayPart + '-' + monthPart + '-' + yearPart + afterPart
+    print('Euro filename : ', euroFilename)
 
-# Form the European-style filename.
-euroFilename = beforePart + dayPart + '-' + monthPart + '-' + yearPart +
-afterPart
-# Get the full, absolute file paths.
-absWorkingDir = os.path.abspath('.')
-amerFilename = os.path.join(absWorkingDir, amerFilename)
-euroFilename = os.path.join(absWorkingDir, euroFilename)
-# Rename the files.
-print(f'Renaming "{amerFilename}" to "{euroFilename}"...')
-#shutil.move(amerFilename, euroFilename) # uncomment after testing
+    # Get the full, absolute file paths.
+    absWorkingDir = os.path.abspath('.')
+    amerFilename = os.path.join(absWorkingDir, amerFilename)
+    euroFilename = os.path.join(absWorkingDir, euroFilename)
+
+    # Rename the files.
+    print(f'Renaming "{amerFilename}" to "{euroFilename}"...') #test output
+    #shutil.move(amerFilename, euroFilename) # uncomment after testing
