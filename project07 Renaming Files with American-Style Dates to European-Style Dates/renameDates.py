@@ -1,5 +1,6 @@
 #! python3
-# renameDates.py - Renames filenames with American MM-DD-YYYY date format to European DD-MM-YYYY.
+# renameDates.py
+# Renames filenames with American MM-DD-YYYY date format to European DD-MM-YYYY.
 import shutil, os, re
 
 
@@ -11,10 +12,30 @@ datePattern = re.compile(r"""^(.*?) # all text before the date
     (.*?)$ # all text after the date
     """, re.VERBOSE)
 
+# Loop over the files in the working directory.
+for amerFilename in os.listdir('.'):
+    matchObj = datePattern.search(amerFilename)
+    # Skip files without a date.
+    if matchObj is None:
+        continue
+    # Get the different parts of the filename.
+    beforePart = matchObj.group(1)
+    monthPart = matchObj.group(2)
+    dayPart = matchObj.group(4)
+    yearPart = matchObj.group(6)
+    afterPart = matchObj.group(8)
 
-# TODO: Loop over the files in the working directory.
-# TODO: Skip files without a date.
-# TODO: Get the different parts of the filename.
 # TODO: Form the European-style filename.
 # TODO: Get the full, absolute file paths.
 # TODO: Rename the files.
+
+# Form the European-style filename.
+euroFilename = beforePart + dayPart + '-' + monthPart + '-' + yearPart +
+afterPart
+# Get the full, absolute file paths.
+absWorkingDir = os.path.abspath('.')
+amerFilename = os.path.join(absWorkingDir, amerFilename)
+euroFilename = os.path.join(absWorkingDir, euroFilename)
+# Rename the files.
+print(f'Renaming "{amerFilename}" to "{euroFilename}"...')
+#shutil.move(amerFilename, euroFilename) # uncomment after testing
